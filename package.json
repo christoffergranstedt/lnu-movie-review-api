@@ -1,0 +1,43 @@
+{
+  "name": "web-api-assignment",
+  "version": "1.0.0",
+  "description": "In this assignment, we are going to implement a web-API following the theory of REST. We encourage you to have your own ideas about the API service to build. Maybe you have some idea you want to start with trough an API driven design? For those of you without any ideas, we present a scenario below. That will also give a hint of the extent of this assignment.",
+  "main": ".server.js",
+  "type": "module",
+  "dependencies": {
+    "axios": "^0.21.1",
+    "bcrypt": "^5.0.0",
+    "cors": "^2.8.5",
+    "crypto-random-string": "^3.3.1",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "express-async-errors": "^3.1.1",
+    "express-rate-limit": "^5.2.6",
+    "express-validator": "^6.9.2",
+    "helmet": "^4.4.1",
+    "http-errors": "^1.8.0",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.11.15",
+    "morgan": "^1.10.0",
+    "mysql2": "^2.2.5",
+    "node-cache": "^5.1.2",
+    "redis": "^3.0.2",
+    "sequelize": "^6.5.0"
+  },
+  "devDependencies": {
+    "eslint": "^7.20.0",
+    "eslint-config-standard": "^16.0.2",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^4.3.1"
+  },
+  "scripts": {
+    "start": "nodemon ./src/server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@gitlab.lnu.se:1dv527/student/cg222sp/web-api-assignment.git"
+  },
+  "author": "",
+  "license": "ISC"
+}

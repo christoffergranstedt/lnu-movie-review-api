@@ -1,0 +1,2877 @@
+{
+	"info": {
+		"_postman_id": "97694fab-6358-416c-aecf-3fd97f49596d",
+		"name": "Movie Review REST API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Accounts",
+			"item": [
+				{
+					"name": "POST /accounts/authenticate",
+					"item": [
+						{
+							"name": "Success",
+							"item": [
+								{
+									"name": "Authenticate admin user",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"const response = pm.response.json()\r",
+													"\r",
+													"pm.environment.set('ADMIN_ACCESS_TOKEN', response.accessToken)\r",
+													"pm.environment.set('ADMIN_REFRESH_TOKEN', response.refreshToken)\r",
+													"\r",
+													"pm.test(\"User is authenticated\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"username\": \"admin\",\r\n    \"password\": \"password\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{DOMAIN_URL}}/accounts/authenticate",
+											"host": [
+												"{{DOMAIN_URL}}"
+											],
+											"path": [
+												"accounts",
+												"authenticate"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Authenticate normal user",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"const response = pm.response.json()\r",
+													"\r",
+													"pm.environment.set('USER_ACCESS_TOKEN', response.accessToken)\r",
+													"pm.environment.set('USER_REFRESH_TOKEN', response.refreshToken)\r",
+													"\r",
+													"pm.test(\"User is authenticated\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"username\": \"admin\",\r\n    \"password\": \"password\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{DOMAIN_URL}}/accounts/authenticate",
+											"host": [
+												"{{DOMAIN_URL}}"
+											],
+											"path": [
+												"accounts",
+												"authenticate"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Fail",
+							"item": [
+								{
+									"name": "Authenticate user non existing username",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Authenticate should fail when entering non existing username\", function () {\r",
+													"    pm.response.to.have.status(401);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"username\": \"admafdsjoijsfdaoij4329889sIJOIDSAOIin\",\r\n    \"password\": \"password\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{DOMAIN_URL}}/accounts/authenticate",
+											"host": [
+												"{{DOMAIN_URL}}"
+											],
+											"path": [
+												"accounts",
+												"authenticate"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "POST /accounts/register",
+					"item": [
+						{
+							"name": "Success",
+							"item": [
+								{
+									"name": "Register new user",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"User is registered\", function () {\r",
+													"    pm.response.to.have.status(201);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"username\": \"newUser2\",\r\n    \"password\": \"password\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{DOMAIN_URL}}/accounts/register",
+											"host": [
+												"{{DOMAIN_URL}}"
+											],
+											"path": [
+												"accounts",
+												"register"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Fail",
+							"item": [
+								{
+									"name": "Register user already exist",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Username is already taken\", function () {\r",
+													"    pm.response.to.have.status(400);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"username\": \"admin\",\r\n    \"password\": \"password\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{DOMAIN_URL}}/accounts/register",
+											"host": [
+												"{{DOMAIN_URL}}"
+											],
+											"path": [
+												"accounts",
+												"register"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "POST /accounts/refresh",
+					"item": [
+						{
+							"name": "Success",
+							"item": [
+								{
+									"name": "Refresh access token user",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});\r",
+													"\r",
+													"pm.environment.set('USER_ACCESS_TOKEN', pm.response.accessToken)\r",
+													"pm.environment.set('USER_REFRESH_TOKEN', pm.response.refreshToken)\r",
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{USER_REFRESH_TOKEN}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"userId\": \"2\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{DOMAIN_URL}}/accounts/refresh",
+											"host": [
+												"{{DOMAIN_URL}}"
+											],
+											"path": [
+												"accounts",
+												"refresh"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Fail",
+							"item": [
+								{
+									"name": "Refresh access token user without user id",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Refresh token without providing user id\", function () {\r",
+													"    pm.response.to.have.status(401);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{USER_REFRESH_TOKEN}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{DOMAIN_URL}}/accounts/refresh",
+											"host": [
+												"{{DOMAIN_URL}}"
+											],
+											"path": [
+												"accounts",
+												"refresh"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Refresh access token wrong user id to refresh token",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Refresh token with wrong user id\", function () {\r",
+													"    pm.response.to.have.status(401);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{USER_REFRESH_TOKEN}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"userId\": \"1\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{DOMAIN_URL}}/accounts/refresh",
+											"host": [
+												"{{DOMAIN_URL}}"
+											],
+											"path": [
+												"accounts",
+												"refresh"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Home",
+			"item": [
+				{
+					"name": "GET /",
+					"item": [
+						{
+							"name": "Success",
+							"item": [
+								{
+									"name": "Success - Start endpoint",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{DOMAIN_URL}}",
+											"host": [
+												"{{DOMAIN_URL}}"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Fail",
+							"item": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Movies",
+			"item": [
+				{
+					"name": "GET /movies",
+					"item": [
+						{
+							"name": "Success",
+							"item": [
+								{
+									"name": "Get all movies with access token",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"All movies should return\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"auth": {
+											"type": "noauth"
+										},
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{DOMAIN_URL}}/movies",
+											"host": [
+												"{{DOMAIN_URL}}"
+											],
+											"path": [
+												"movies"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Get all movies without accesstoken",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"All movies should return\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{DOMAIN_URL}}/movies",
+											"host": [
+												"{{DOMAIN_URL}}"
+											],
+											"path": [
+												"movies"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Fail",
+							"item": []
+						}
+					]
+				},
+				{
+					"name": "GET /movies/{movie}",
+					"item": [
+						{
+							"name": "Success",
+							"item": [
+								{
+									"name": "Get movie with access token",
+									"event": [
+										{
+											"listen": "prerequest",
+											"script": {
+												"exec": [
+													"pm.sendRequest({\r",
+													"    url: pm.environment.get(\"DOMAIN_URL\") + '/movies',\r",
+													"    method: 'POST',\r",
+													"    header: {\r",
+													"        \"Authorization\": `Bearer ${pm.environment.get(\"ADMIN_ACCESS_TOKEN\")}`,\r",
+													"        \"Content-Type\": \"application/json\"\r",
+													"    },\r",
+													"    body: JSON.stringify({\r",
+													"        name: 'Cool movie',\r",
+													"        year: '1994',\r",
+													"        imageCoverLink: 'https://www.testingtestingtesting2.com'\r",
+													"    })\r",
+													"}, function (error, result) {\r",
+													"    pm.environment.set(\"MOVIE\", result.json().movie.id);\r",
+													"});\r",
+													""
+												],
+												"type": "text/javascript"
+											}
+										},
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Get a specific movie successful\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});\r",
+													"\r",
+													"pm.sendRequest({\r",
+													"    url: pm.environment.get(\"DOMAIN_URL\") + '/movies/' + pm.environment.get(\"MOVIE\"),\r",
+													"    method: 'DELETE',\r",
+													"    header: {\r",
+													"        \"Authorization\": `Bearer ${pm.environment.get(\"ADMIN_ACCESS_TOKEN\")}`,\r",
+													"        \"Content-Type\": \"application/json\"\r",
+													"    }\r",
+													"}, function (error, result) {\r",
+													"    pm.environment.set(\"MOVIE\", \"\");\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{DOMAIN_URL}}/movies/{{MOVIE}}",
+											"host": [
+												"{{DOMAIN_URL}}"
+											],
+											"path": [
+												"movies",
+												"{{MOVIE}}"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Get movie with access without access token",
+									"event": [
+										{
+											"listen": "prerequest",
+											"script": {
+												"exec": [
+													"pm.sendRequest({\r",
+													"    url: pm.environment.get(\"DOMAIN_URL\") + '/movies',\r",
+													"    method: 'POST',\r",
+													"    header: {\r",
+													"        \"Authorization\": `Bearer ${pm.environment.get(\"ADMIN_ACCESS_TOKEN\")}`,\r",
+													"        \"Content-Type\": \"application/json\"\r",
+													"    },\r",
+													"    body: JSON.stringify({\r",
+													"        name: 'Cool movie',\r",
+													"        year: '1994',\r",
+													"        imageCoverLink: 'https://www.testingtestingtesting2.com'\r",
+													"    })\r",
+													"}, function (error, result) {\r",
+													"    pm.environment.set(\"MOVIE\", result.json().movie.id);\r",
+													"});\r",
+													""
+												],
+												"type": "text/javascript"
+											}
+										},
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Get a specific movie successful\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});\r",
+													"\r",
+													"pm.sendRequest({\r",
+													"    url: pm.environment.get(\"DOMAIN_URL\") + '/movies/' + pm.environment.get(\"MOVIE\"),\r",
+													"    method: 'DELETE',\r",
+													"    header: {\r",
+													"        \"Authorization\": `Bearer ${pm.environment.get(\"ADMIN_ACCESS_TOKEN\")}`,\r",
+													"        \"Content-Type\": \"application/json\"\r",
+													"    }\r",
+													"}, function (error, result) {\r",
+													"    pm.environment.set(\"MOVIE\", \"\");\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"auth": {
+											"type": "noauth"
+										},
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{DOMAIN_URL}}/movies/{{MOVIE}}",
+											"host": [
+												"{{DOMAIN_URL}}"
+											],
+											"path": [
+												"movies",
+												"{{MOVIE}}"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Fail",
+							"item": [
+								{
+									"name": "Get movie that not exist",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Movie could not be found\", function () {\r",
+													"    pm.response.to.have.status(404);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{DOMAIN_URL}}/movies/4325643245644326524346432465234465",
+											"host": [
+												"{{DOMAIN_URL}}"
+											],
+											"path": [
+												"movies",
+												"4325643245644326524346432465234465"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "POST /movies",
+					"item": [
+						{
+							"name": "Success",
+							"item": [
+								{
+									"name": "Create movie with admin permisson",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Movie is successfully created\", function () {\r",
+													"    pm.response.to.have.status(201);\r",
+													"    console.log(pm.response.json().movie)\r",
+													"    pm.sendRequest({\r",
+													"        url: pm.environment.get(\"DOMAIN_URL\") + '/movies/' + pm.response.json().movie.id,\r",
+													"        method: 'DELETE',\r",
+													"        header: {\"Authorization\": `Bearer ${pm.environment.get(\"ADMIN_ACCESS_TOKEN\")}`},\r",
+													"    });\r",
+													"});\r",
+													"\r",
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{ADMIN_ACCESS_TOKEN}}",
+													"type": "string"
+												},
+												{
+													"key": "password",
+													"value": "{{ACCESS_TOKEN}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"name\": \"Lion King 2\",\r\n    \"year\": \"2016\",\r\n    \"imageCoverLink\": \"https://www.googlessssd.com\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{DOMAIN_URL}}/movies",
+											"host": [
+												"{{DOMAIN_URL}}"
+											],
+											"path": [
+												"movies"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Fail",
+							"item": [
+								{
+									"name": "Create movie without admin permission level",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Normal user is not authorized to create movies\", function () {\r",
+													"    pm.response.to.have.status(403);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{USER_ACCESS_TOKEN}}",
+													"type": "string"
+												},
+												{
+													"key": "password",
+													"value": "{{ACCESS_TOKEN}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"name\": \"Lion King\",\r\n    \"year\": \"2016\",\r\n    \"imageCoverLink\": \"https://www.altavista68.com\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{DOMAIN_URL}}/movies",
+											"host": [
+												"{{DOMAIN_URL}}"
+											],
+											"path": [
+												"movies"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Create movie without access token",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Not providing access token for creating movie\", function () {\r",
+													"    pm.response.to.have.status(401);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"auth": {
+											"type": "noauth"
+										},
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"name\": \"Lion King\",\r\n    \"year\": \"2018\",\r\n    \"imageCoverLink\": \"https://www.altavista.com\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{DOMAIN_URL}}/movies",
+											"host": [
+												"{{DOMAIN_URL}}"
+											],
+											"path": [
+												"movies"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Create movie missing attribute",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Not providing all inputs\", function () {\r",
+													"    pm.response.to.have.status(400);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{ADMIN_ACCESS_TOKEN}}",
+													"type": "string"
+												},
+												{
+													"key": "password",
+													"value": "{{ACCESS_TOKEN}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"dateForRelease\": \"2016-12-15\",\r\n    \"imageCoverLink\": \"https://www.googla.com\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{DOMAIN_URL}}/movies",
+											"host": [
+												"{{DOMAIN_URL}}"
+											],
+											"path": [
+												"movies"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "PUT /movies/{movie}",
+					"item": [
+						{
+							"name": "Success",
+							"item": [
+								{
+									"name": "Update movie with admin access token",
+									"event": [
+										{
+											"listen": "prerequest",
+											"script": {
+												"exec": [
+													"pm.sendRequest({\r",
+													"    url: pm.environment.get(\"DOMAIN_URL\") + '/movies',\r",
+													"    method: 'POST',\r",
+													"    header: {\r",
+													"        \"Authorization\": `Bearer ${pm.environment.get(\"ADMIN_ACCESS_TOKEN\")}`,\r",
+													"        \"Content-Type\": \"application/json\"\r",
+													"    },\r",
+													"    body: JSON.stringify({\r",
+													"        name: 'Cool movie',\r",
+													"        year: '1994',\r",
+													"        imageCoverLink: 'https://www.testingtestingtesting2.com'\r",
+													"    })\r",
+													"}, function (error, result) {\r",
+													"    pm.environment.set(\"MOVIE\", result.json().movie.id);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										},
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Update a specific movie successful\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});\r",
+													"\r",
+													"pm.sendRequest({\r",
+													"    url: pm.environment.get(\"DOMAIN_URL\") + '/movies/' + pm.environment.get(\"MOVIE\"),\r",
+													"    method: 'DELETE',\r",
+													"    header: {\r",
+													"        \"Authorization\": `Bearer ${pm.environment.get(\"ADMIN_ACCESS_TOKEN\")}`,\r",
+													"        \"Content-Type\": \"application/json\"\r",
+													"    }\r",
+													"}, function (error, result) {\r",
+													"    pm.environment.set(\"MOVIE\", \"\");\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{ADMIN_ACCESS_TOKEN}}",
+													"type": "string"
+												},
+												{
+													"key": "password",
+													"value": "{{ACCESS_TOKEN}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"name\": \"Lion King 2\",\r\n    \"year\": \"1994\",\r\n    \"imageCoverLink\": \"https://www.testtest22.se\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{DOMAIN_URL}}/movies/{{MOVIE}}",
+											"host": [
+												"{{DOMAIN_URL}}"
+											],
+											"path": [
+												"movies",
+												"{{MOVIE}}"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Fail",
+							"item": [
+								{
+									"name": "Update movie with user access token",
+									"event": [
+										{
+											"listen": "prerequest",
+											"script": {
+												"exec": [
+													"pm.sendRequest({\r",
+													"    url: pm.environment.get(\"DOMAIN_URL\") + '/movies',\r",
+													"    method: 'POST',\r",
+													"    header: {\r",
+													"        \"Authorization\": `Bearer ${pm.environment.get(\"ADMIN_ACCESS_TOKEN\")}`,\r",
+													"        \"Content-Type\": \"application/json\"\r",
+													"    },\r",
+													"    body: JSON.stringify({\r",
+													"        name: 'Cool movie',\r",
+													"        year: '1994',\r",
+													"        imageCoverLink: 'https://www.testingtestingtesting2.com'\r",
+													"    })\r",
+													"}, function (error, result) {\r",
+													"    pm.environment.set(\"MOVIE\", result.json().movie.id);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										},
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Update a specific movie without permission\", function () {\r",
+													"    pm.response.to.have.status(403);\r",
+													"});\r",
+													"\r",
+													"pm.sendRequest({\r",
+													"    url: pm.environment.get(\"DOMAIN_URL\") + '/movies/' + pm.environment.get(\"MOVIE\"),\r",
+													"    method: 'DELETE',\r",
+													"    header: {\r",
+													"        \"Authorization\": `Bearer ${pm.environment.get(\"ADMIN_ACCESS_TOKEN\")}`,\r",
+													"        \"Content-Type\": \"application/json\"\r",
+													"    }\r",
+													"}, function (error, result) {\r",
+													"    pm.environment.set(\"MOVIE\", \"\");\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{USER_ACCESS_TOKEN}}",
+													"type": "string"
+												},
+												{
+													"key": "password",
+													"value": "{{ACCESS_TOKEN}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"name\": \"Lion King 2\",\r\n    \"year\": \"1994\",\r\n    \"imageCoverLink\": \"https://www.testtest22.se\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{DOMAIN_URL}}/movies/{{MOVIE}}",
+											"host": [
+												"{{DOMAIN_URL}}"
+											],
+											"path": [
+												"movies",
+												"{{MOVIE}}"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "DELETE /movies/{movie}",
+					"item": [
+						{
+							"name": "Success",
+							"item": [
+								{
+									"name": "Delete a movie with admin access token",
+									"event": [
+										{
+											"listen": "prerequest",
+											"script": {
+												"exec": [
+													"pm.sendRequest({\r",
+													"    url: pm.environment.get(\"DOMAIN_URL\") + '/movies',\r",
+													"    method: 'POST',\r",
+													"    header: {\r",
+													"        \"Authorization\": `Bearer ${pm.environment.get(\"ADMIN_ACCESS_TOKEN\")}`,\r",
+													"        \"Content-Type\": \"application/json\"\r",
+													"    },\r",
+													"    body: JSON.stringify({\r",
+													"        name: 'Cool movie',\r",
+													"        year: '1994',\r",
+													"        imageCoverLink: 'https://www.testingtestingtesting5.com'\r",
+													"    })\r",
+													"}, function (error, result) {\r",
+													"    pm.environment.set(\"MOVIE\", result.json().movie.id);\r",
+													"});\r",
+													""
+												],
+												"type": "text/javascript"
+											}
+										},
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Delete a specific movie successful\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{ADMIN_ACCESS_TOKEN}}",
+													"type": "string"
+												},
+												{
+													"key": "password",
+													"value": "{{ACCESS_TOKEN}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{DOMAIN_URL}}/movies/{{MOVIE}}",
+											"host": [
+												"{{DOMAIN_URL}}"
+											],
+											"path": [
+												"movies",
+												"{{MOVIE}}"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Fail",
+							"item": [
+								{
+									"name": "Delete a movie with user access token",
+									"event": [
+										{
+											"listen": "prerequest",
+											"script": {
+												"exec": [
+													"pm.sendRequest({\r",
+													"    url: pm.environment.get(\"DOMAIN_URL\") + '/movies',\r",
+													"    method: 'POST',\r",
+													"    header: {\r",
+													"        \"Authorization\": `Bearer ${pm.environment.get(\"ADMIN_ACCESS_TOKEN\")}`,\r",
+													"        \"Content-Type\": \"application/json\"\r",
+													"    },\r",
+													"    body: JSON.stringify({\r",
+													"        name: 'Cool movie',\r",
+													"        year: '1994',\r",
+													"        imageCoverLink: 'https://www.testingtestingtesting3.com'\r",
+													"    })\r",
+													"}, function (error, result) {\r",
+													"    pm.environment.set(\"MOVIE\", result.json().movie.id);\r",
+													"});\r",
+													""
+												],
+												"type": "text/javascript"
+											}
+										},
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Delete a specific movie with user access token\", function () {\r",
+													"    pm.response.to.have.status(403);\r",
+													"});\r",
+													"\r",
+													"pm.sendRequest({\r",
+													"    url: pm.environment.get(\"DOMAIN_URL\") + '/movies/' + pm.environment.get(\"MOVIE\"),\r",
+													"    method: 'DELETE',\r",
+													"    header: {\r",
+													"        \"Authorization\": `Bearer ${pm.environment.get(\"ADMIN_ACCESS_TOKEN\")}`,\r",
+													"        \"Content-Type\": \"application/json\"\r",
+													"    }\r",
+													"}, function (error, result) {\r",
+													"    pm.environment.set(\"MOVIE\", \"\");\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{DOMAIN_URL}}/movies/{{MOVIE}}",
+											"host": [
+												"{{DOMAIN_URL}}"
+											],
+											"path": [
+												"movies",
+												"{{MOVIE}}"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Movie-Reviews",
+			"item": [
+				{
+					"name": "GET /movies/{movie}/reviews",
+					"item": [
+						{
+							"name": "Success",
+							"item": [
+								{
+									"name": "Get movie reviews with user access token",
+									"event": [
+										{
+											"listen": "prerequest",
+											"script": {
+												"exec": [
+													""
+												],
+												"type": "text/javascript"
+											}
+										},
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Get a all movie reviews for a specific movie without\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"auth": {
+											"type": "noauth"
+										},
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{DOMAIN_URL}}/movies/1/reviews?pageSize=5&pageStartIndex=0",
+											"host": [
+												"{{DOMAIN_URL}}"
+											],
+											"path": [
+												"movies",
+												"1",
+												"reviews"
+											],
+											"query": [
+												{
+													"key": "rating",
+													"value": "3",
+													"disabled": true
+												},
+												{
+													"key": "pageSize",
+													"value": "5"
+												},
+												{
+													"key": "pageStartIndex",
+													"value": "0"
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Get movie reviews without access token",
+									"event": [
+										{
+											"listen": "prerequest",
+											"script": {
+												"exec": [
+													""
+												],
+												"type": "text/javascript"
+											}
+										},
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Get a all movie reviews for a specific movie successful\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{DOMAIN_URL}}/movies/1/reviews",
+											"host": [
+												"{{DOMAIN_URL}}"
+											],
+											"path": [
+												"movies",
+												"1",
+												"reviews"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Fail",
+							"item": []
+						}
+					]
+				},
+				{
+					"name": "GET /movies/{movie}/reviews/{review}",
+					"item": [
+						{
+							"name": "Success",
+							"item": [
+								{
+									"name": "Get movie review with access token",
+									"event": [
+										{
+											"listen": "prerequest",
+											"script": {
+												"exec": [
+													"pm.sendRequest({\r",
+													"    url: pm.environment.get(\"DOMAIN_URL\") + '/movies/1/reviews',\r",
+													"    method: 'POST',\r",
+													"    header: {\r",
+													"        \"Authorization\": `Bearer ${pm.environment.get(\"USER_ACCESS_TOKEN\")}`,\r",
+													"        \"Content-Type\": \"application/json\"\r",
+													"    },\r",
+													"    body: JSON.stringify({\r",
+													"        title: 'Really good movie',\r",
+													"        description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer eget accumsan nunc. Proin sodales pellentesque accumsan. Fusce rhoncus nisi ante, et auctor augue vulputate eu. Nulla id sem nisi. Cras ullamcorper varius ullamcorper. Quisque ante justo, vehicula id sem posuere, vehicula vestibulum nulla. Proin vitae tellus diam. Mauris nisl erat, euismod ac urna a, pellentesque accumsan massa.',\r",
+													"        rating: '5'\r",
+													"    })\r",
+													"}, function (error, result) {\r",
+													"    pm.environment.set(\"REVIEW\", result.json().review.id);\r",
+													"});\r",
+													""
+												],
+												"type": "text/javascript"
+											}
+										},
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Get a specific movie successful\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});\r",
+													"\r",
+													"pm.sendRequest({\r",
+													"    url: pm.environment.get(\"DOMAIN_URL\") + '/movies/1/reviews/' + pm.environment.get(\"REVIEW\"),\r",
+													"    method: 'DELETE',\r",
+													"    header: {\r",
+													"        \"Authorization\": `Bearer ${pm.environment.get(\"USER_ACCESS_TOKEN\")}`,\r",
+													"        \"Content-Type\": \"application/json\"\r",
+													"    }\r",
+													"}, function (error, result) {\r",
+													"    pm.environment.set(\"MOVIE\", \"\");\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{USER_ACCESS_TOKEN}}",
+													"type": "string"
+												},
+												{
+													"key": "password",
+													"value": "{{ACCESS_TOKEN}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{DOMAIN_URL}}/movies/1/reviews/{{REVIEW}}",
+											"host": [
+												"{{DOMAIN_URL}}"
+											],
+											"path": [
+												"movies",
+												"1",
+												"reviews",
+												"{{REVIEW}}"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Get movie review without access token",
+									"event": [
+										{
+											"listen": "prerequest",
+											"script": {
+												"exec": [
+													"pm.sendRequest({\r",
+													"    url: pm.environment.get(\"DOMAIN_URL\") + '/movies/1/reviews',\r",
+													"    method: 'POST',\r",
+													"    header: {\r",
+													"        \"Authorization\": `Bearer ${pm.environment.get(\"USER_ACCESS_TOKEN\")}`,\r",
+													"        \"Content-Type\": \"application/json\"\r",
+													"    },\r",
+													"    body: JSON.stringify({\r",
+													"        title: 'Really good movie',\r",
+													"        description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer eget accumsan nunc. Proin sodales pellentesque accumsan. Fusce rhoncus nisi ante, et auctor augue vulputate eu. Nulla id sem nisi. Cras ullamcorper varius ullamcorper. Quisque ante justo, vehicula id sem posuere, vehicula vestibulum nulla. Proin vitae tellus diam. Mauris nisl erat, euismod ac urna a, pellentesque accumsan massa.',\r",
+													"        rating: '5'\r",
+													"    })\r",
+													"}, function (error, result) {\r",
+													"    pm.environment.set(\"REVIEW\", result.json().review.id);\r",
+													"});\r",
+													""
+												],
+												"type": "text/javascript"
+											}
+										},
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Get a specific movie successful\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});\r",
+													"\r",
+													"pm.sendRequest({\r",
+													"    url: pm.environment.get(\"DOMAIN_URL\") + '/movies/1/reviews/' + pm.environment.get(\"REVIEW\"),\r",
+													"    method: 'DELETE',\r",
+													"    header: {\r",
+													"        \"Authorization\": `Bearer ${pm.environment.get(\"USER_ACCESS_TOKEN\")}`,\r",
+													"        \"Content-Type\": \"application/json\"\r",
+													"    }\r",
+													"}, function (error, result) {\r",
+													"    pm.environment.set(\"MOVIE\", \"\");\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"auth": {
+											"type": "noauth"
+										},
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{DOMAIN_URL}}/movies/1/reviews/{{REVIEW}}",
+											"host": [
+												"{{DOMAIN_URL}}"
+											],
+											"path": [
+												"movies",
+												"1",
+												"reviews",
+												"{{REVIEW}}"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Fail",
+							"item": [
+								{
+									"name": "Get movie review that not exist",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Movie could not be found\", function () {\r",
+													"    pm.response.to.have.status(404);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{DOMAIN_URL}}/movies/1/reviews/4325643245644326524346432465234465",
+											"host": [
+												"{{DOMAIN_URL}}"
+											],
+											"path": [
+												"movies",
+												"1",
+												"reviews",
+												"4325643245644326524346432465234465"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "POST /movies/{movie}/reviews",
+					"item": [
+						{
+							"name": "Success",
+							"item": [
+								{
+									"name": "Create movie review with access token",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Movie is successfully created\", function () {\r",
+													"    pm.response.to.have.status(201);\r",
+													"    console.log(pm.response.json().movie)\r",
+													"    pm.sendRequest({\r",
+													"        url: pm.environment.get(\"DOMAIN_URL\") + '/movies/1/reviews/' + pm.response.json().review.id,\r",
+													"        method: 'DELETE',\r",
+													"        header: {\"Authorization\": `Bearer ${pm.environment.get(\"USER_ACCESS_TOKEN\")}`},\r",
+													"    });\r",
+													"});\r",
+													"\r",
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"title\": \"Quite good movie\",\r\n    \"description\": \"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer eget accumsan nunc. Proin sodales pellentesque accumsan. Fusce rhoncus nisi ante, et auctor augue\",\r\n    \"rating\": \"4\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{DOMAIN_URL}}/movies/1/reviews",
+											"host": [
+												"{{DOMAIN_URL}}"
+											],
+											"path": [
+												"movies",
+												"1",
+												"reviews"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Fail",
+							"item": [
+								{
+									"name": "Create movie review without access token",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Could not create movie review without access token\", function () {\r",
+													"    pm.response.to.have.status(401);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"auth": {
+											"type": "noauth"
+										},
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"title\": \"Quite good movie\",\r\n    \"description\": \"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer eget accumsan nunc. Proin sodales pellentesque accumsan. Fusce rhoncus nisi ante, et auctor augue\",\r\n    \"rating\": \"4\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{DOMAIN_URL}}/movies/1/reviews",
+											"host": [
+												"{{DOMAIN_URL}}"
+											],
+											"path": [
+												"movies",
+												"1",
+												"reviews"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Create movie missing attribute",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Not providing all inputs\", function () {\r",
+													"    pm.response.to.have.status(400);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{ADMIN_ACCESS_TOKEN}}",
+													"type": "string"
+												},
+												{
+													"key": "password",
+													"value": "{{ACCESS_TOKEN}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"title\": \"Quite good movie\",\r\n    \"description\": \"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer eget accumsan nunc. Proin sodales pellentesque accumsan. Fusce rhoncus nisi ante, et auctor augue\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{DOMAIN_URL}}/movies/1/reviews",
+											"host": [
+												"{{DOMAIN_URL}}"
+											],
+											"path": [
+												"movies",
+												"1",
+												"reviews"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "PUT /movies/{movie}/reviews/{review}",
+					"item": [
+						{
+							"name": "Success",
+							"item": [
+								{
+									"name": "Update movie with user access token",
+									"event": [
+										{
+											"listen": "prerequest",
+											"script": {
+												"exec": [
+													"pm.sendRequest({\r",
+													"    url: pm.environment.get(\"DOMAIN_URL\") + '/movies/1/reviews',\r",
+													"    method: 'POST',\r",
+													"    header: {\r",
+													"        \"Authorization\": `Bearer ${pm.environment.get(\"USER_ACCESS_TOKEN\")}`,\r",
+													"        \"Content-Type\": \"application/json\"\r",
+													"    },\r",
+													"    body: JSON.stringify({\r",
+													"        title: 'Really good movie',\r",
+													"        description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer eget accumsan nunc. Proin sodales pellentesque accumsan. Fusce rhoncus nisi ante, et auctor augue vulputate eu. Nulla id sem nisi. Cras ullamcorper varius ullamcorper. Quisque ante justo, vehicula id sem posuere, vehicula vestibulum nulla. Proin vitae tellus diam. Mauris nisl erat, euismod ac urna a, pellentesque accumsan massa.',\r",
+													"        rating: '5'\r",
+													"    })\r",
+													"}, function (error, result) {\r",
+													"    pm.environment.set(\"REVIEW\", result.json().review.id);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										},
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Update a specific movie successful\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});\r",
+													"\r",
+													"pm.sendRequest({\r",
+													"    url: pm.environment.get(\"DOMAIN_URL\") + '/movies/1/reviews/' + pm.environment.get(\"REVIEW\"),\r",
+													"    method: 'DELETE',\r",
+													"    header: {\r",
+													"        \"Authorization\": `Bearer ${pm.environment.get(\"USER_ACCESS_TOKEN\")}`,\r",
+													"        \"Content-Type\": \"application/json\"\r",
+													"    }\r",
+													"}, function (error, result) {\r",
+													"    pm.environment.set(\"MOVIE\", \"\");\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"title\": \"Quite good movie\",\r\n    \"description\": \"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer eget accumsan nunc. Proin sodales pellentesque accumsan. Fusce rhoncus nisi ante, et auctor augue\",\r\n    \"rating\": \"4\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{DOMAIN_URL}}/movies/1/reviews/{{REVIEW}}",
+											"host": [
+												"{{DOMAIN_URL}}"
+											],
+											"path": [
+												"movies",
+												"1",
+												"reviews",
+												"{{REVIEW}}"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Fail",
+							"item": [
+								{
+									"name": "Update movie without access token",
+									"event": [
+										{
+											"listen": "prerequest",
+											"script": {
+												"exec": [
+													"pm.sendRequest({\r",
+													"    url: pm.environment.get(\"DOMAIN_URL\") + '/movies/1/reviews',\r",
+													"    method: 'POST',\r",
+													"    header: {\r",
+													"        \"Authorization\": `Bearer ${pm.environment.get(\"USER_ACCESS_TOKEN\")}`,\r",
+													"        \"Content-Type\": \"application/json\"\r",
+													"    },\r",
+													"    body: JSON.stringify({\r",
+													"        title: 'Really good movie',\r",
+													"        description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer eget accumsan nunc. Proin sodales pellentesque accumsan. Fusce rhoncus nisi ante, et auctor augue vulputate eu. Nulla id sem nisi. Cras ullamcorper varius ullamcorper. Quisque ante justo, vehicula id sem posuere, vehicula vestibulum nulla. Proin vitae tellus diam. Mauris nisl erat, euismod ac urna a, pellentesque accumsan massa.',\r",
+													"        rating: '5'\r",
+													"    })\r",
+													"}, function (error, result) {\r",
+													"    pm.environment.set(\"REVIEW\", result.json().review.id);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										},
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Update a specific movie without access token\", function () {\r",
+													"    pm.response.to.have.status(401);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"auth": {
+											"type": "noauth"
+										},
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"title\": \"Quite good movie\",\r\n    \"description\": \"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer eget accumsan nunc. Proin sodales pellentesque accumsan. Fusce rhoncus nisi ante, et auctor augue\",\r\n    \"rating\": \"4\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{DOMAIN_URL}}/movies/1/reviews/{{REVIEW}}",
+											"host": [
+												"{{DOMAIN_URL}}"
+											],
+											"path": [
+												"movies",
+												"1",
+												"reviews",
+												"{{REVIEW}}"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Update movie without access token for wrong user",
+									"event": [
+										{
+											"listen": "prerequest",
+											"script": {
+												"exec": [
+													"pm.sendRequest({\r",
+													"    url: pm.environment.get(\"DOMAIN_URL\") + '/movies/1/reviews',\r",
+													"    method: 'POST',\r",
+													"    header: {\r",
+													"        \"Authorization\": `Bearer ${pm.environment.get(\"USER_ACCESS_TOKEN\")}`,\r",
+													"        \"Content-Type\": \"application/json\"\r",
+													"    },\r",
+													"    body: JSON.stringify({\r",
+													"        title: 'Really good movie',\r",
+													"        description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer eget accumsan nunc. Proin sodales pellentesque accumsan. Fusce rhoncus nisi ante, et auctor augue vulputate eu. Nulla id sem nisi. Cras ullamcorper varius ullamcorper. Quisque ante justo, vehicula id sem posuere, vehicula vestibulum nulla. Proin vitae tellus diam. Mauris nisl erat, euismod ac urna a, pellentesque accumsan massa.',\r",
+													"        rating: '5'\r",
+													"    })\r",
+													"}, function (error, result) {\r",
+													"    pm.environment.set(\"REVIEW\", result.json().review.id);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										},
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Update a specific movie review without permission\", function () {\r",
+													"    pm.response.to.have.status(403);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{ADMIN_ACCESS_TOKEN}}",
+													"type": "string"
+												},
+												{
+													"key": "password",
+													"value": "{{ACCESS_TOKEN}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"title\": \"Quite good movie\",\r\n    \"description\": \"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer eget accumsan nunc. Proin sodales pellentesque accumsan. Fusce rhoncus nisi ante, et auctor augue\",\r\n    \"rating\": \"4\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{DOMAIN_URL}}/movies/1/reviews/{{REVIEW}}",
+											"host": [
+												"{{DOMAIN_URL}}"
+											],
+											"path": [
+												"movies",
+												"1",
+												"reviews",
+												"{{REVIEW}}"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "DELETE /movies/{movie}/reviews/{review}",
+					"item": [
+						{
+							"name": "Success",
+							"item": [
+								{
+									"name": "Delete a movie review with correct user access token",
+									"event": [
+										{
+											"listen": "prerequest",
+											"script": {
+												"exec": [
+													"pm.sendRequest({\r",
+													"    url: pm.environment.get(\"DOMAIN_URL\") + '/movies/1/reviews',\r",
+													"    method: 'POST',\r",
+													"    header: {\r",
+													"        \"Authorization\": `Bearer ${pm.environment.get(\"USER_ACCESS_TOKEN\")}`,\r",
+													"        \"Content-Type\": \"application/json\"\r",
+													"    },\r",
+													"    body: JSON.stringify({\r",
+													"        title: 'Really good movie',\r",
+													"        description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer eget accumsan nunc. Proin sodales pellentesque accumsan. Fusce rhoncus nisi ante, et auctor augue vulputate eu. Nulla id sem nisi. Cras ullamcorper varius ullamcorper. Quisque ante justo, vehicula id sem posuere, vehicula vestibulum nulla. Proin vitae tellus diam. Mauris nisl erat, euismod ac urna a, pellentesque accumsan massa.',\r",
+													"        rating: '5'\r",
+													"    })\r",
+													"}, function (error, result) {\r",
+													"    pm.environment.set(\"REVIEW\", result.json().review.id);\r",
+													"});\r",
+													""
+												],
+												"type": "text/javascript"
+											}
+										},
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Delete a specific movie review successful\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{DOMAIN_URL}}/movies/1/reviews/{{REVIEW}}",
+											"host": [
+												"{{DOMAIN_URL}}"
+											],
+											"path": [
+												"movies",
+												"1",
+												"reviews",
+												"{{REVIEW}}"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Fail",
+							"item": [
+								{
+									"name": "Delete a movie without access token",
+									"event": [
+										{
+											"listen": "prerequest",
+											"script": {
+												"exec": [
+													"pm.sendRequest({\r",
+													"    url: pm.environment.get(\"DOMAIN_URL\") + '/movies/1/reviews',\r",
+													"    method: 'POST',\r",
+													"    header: {\r",
+													"        \"Authorization\": `Bearer ${pm.environment.get(\"USER_ACCESS_TOKEN\")}`,\r",
+													"        \"Content-Type\": \"application/json\"\r",
+													"    },\r",
+													"    body: JSON.stringify({\r",
+													"        title: 'Really good movie',\r",
+													"        description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer eget accumsan nunc. Proin sodales pellentesque accumsan. Fusce rhoncus nisi ante, et auctor augue vulputate eu. Nulla id sem nisi. Cras ullamcorper varius ullamcorper. Quisque ante justo, vehicula id sem posuere, vehicula vestibulum nulla. Proin vitae tellus diam. Mauris nisl erat, euismod ac urna a, pellentesque accumsan massa.',\r",
+													"        rating: '5'\r",
+													"    })\r",
+													"}, function (error, result) {\r",
+													"    console.log(result.json())\r",
+													"    pm.environment.set(\"REVIEW\", result.json().review.id);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										},
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Delete a specific movie without access token\", function () {\r",
+													"    pm.response.to.have.status(401);\r",
+													"});\r",
+													"\r",
+													"pm.sendRequest({\r",
+													"    url: pm.environment.get(\"DOMAIN_URL\") + '/movies/1/reviews/' + pm.environment.get(\"REVIEW\"),\r",
+													"    method: 'DELETE',\r",
+													"    header: {\r",
+													"        \"Authorization\": `Bearer ${pm.environment.get(\"USER_ACCESS_TOKEN\")}`,\r",
+													"        \"Content-Type\": \"application/json\"\r",
+													"    }\r",
+													"}, function (error, result) {\r",
+													"    pm.environment.set(\"MOVIE\", \"\");\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"auth": {
+											"type": "noauth"
+										},
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{DOMAIN_URL}}/movies/1/reviews/{{REVIEW}}",
+											"host": [
+												"{{DOMAIN_URL}}"
+											],
+											"path": [
+												"movies",
+												"1",
+												"reviews",
+												"{{REVIEW}}"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Delete a movie without access for wrong user",
+									"event": [
+										{
+											"listen": "prerequest",
+											"script": {
+												"exec": [
+													"pm.sendRequest({\r",
+													"    url: pm.environment.get(\"DOMAIN_URL\") + '/movies/1/reviews',\r",
+													"    method: 'POST',\r",
+													"    header: {\r",
+													"        \"Authorization\": `Bearer ${pm.environment.get(\"USER_ACCESS_TOKEN\")}`,\r",
+													"        \"Content-Type\": \"application/json\"\r",
+													"    },\r",
+													"    body: JSON.stringify({\r",
+													"        title: 'Really good movie',\r",
+													"        description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer eget accumsan nunc. Proin sodales pellentesque accumsan. Fusce rhoncus nisi ante, et auctor augue vulputate eu. Nulla id sem nisi. Cras ullamcorper varius ullamcorper. Quisque ante justo, vehicula id sem posuere, vehicula vestibulum nulla. Proin vitae tellus diam. Mauris nisl erat, euismod ac urna a, pellentesque accumsan massa.',\r",
+													"        rating: '5'\r",
+													"    })\r",
+													"}, function (error, result) {\r",
+													"    console.log(result.json())\r",
+													"    pm.environment.set(\"REVIEW\", result.json().review.id);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										},
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Delete a specific movie without permisson with not created by yourself\", function () {\r",
+													"    pm.response.to.have.status(403);\r",
+													"});\r",
+													"\r",
+													"pm.sendRequest({\r",
+													"    url: pm.environment.get(\"DOMAIN_URL\") + '/movies/1/reviews/' + pm.environment.get(\"REVIEW\"),\r",
+													"    method: 'DELETE',\r",
+													"    header: {\r",
+													"        \"Authorization\": `Bearer ${pm.environment.get(\"USER_ACCESS_TOKEN\")}`,\r",
+													"        \"Content-Type\": \"application/json\"\r",
+													"    }\r",
+													"}, function (error, result) {\r",
+													"    pm.environment.set(\"MOVIE\", \"\");\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{ADMIN_ACCESS_TOKEN}}",
+													"type": "string"
+												},
+												{
+													"key": "password",
+													"value": "{{ACCESS_TOKEN}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{DOMAIN_URL}}/movies/1/reviews/{{REVIEW}}",
+											"host": [
+												"{{DOMAIN_URL}}"
+											],
+											"path": [
+												"movies",
+												"1",
+												"reviews",
+												"{{REVIEW}}"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Movie-Webhooks",
+			"item": [
+				{
+					"name": "GET /movies/webhooks/{webhook}",
+					"item": [
+						{
+							"name": "Success",
+							"item": [
+								{
+									"name": "Get a webhook with correct user access token",
+									"event": [
+										{
+											"listen": "prerequest",
+											"script": {
+												"exec": [
+													"pm.sendRequest({\r",
+													"    url: pm.environment.get(\"DOMAIN_URL\") + '/movies/webhooks',\r",
+													"    method: 'POST',\r",
+													"    header: {\r",
+													"        \"Authorization\": `Bearer ${pm.environment.get(\"USER_ACCESS_TOKEN\")}`,\r",
+													"        \"Content-Type\": \"application/json\"\r",
+													"    },\r",
+													"    body: JSON.stringify({\r",
+													"        \"url\": \"https://www.coolplaces.com\",\r",
+													"        \"token\": \"my_secret_token\"\r",
+													"    })\r",
+													"}, function (error, result) {\r",
+													"    pm.environment.set(\"WEBHOOK\", result.json().webhook.id);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										},
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Get a specific webhook\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"    pm.sendRequest({\r",
+													"        url: pm.environment.get(\"DOMAIN_URL\") + '/movies/webhooks/' + pm.response.json().webhook.id,\r",
+													"        method: 'DELETE',\r",
+													"        header: {\"Authorization\": `Bearer ${pm.environment.get(\"USER_ACCESS_TOKEN\")}`},\r",
+													"    });\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "GET",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{DOMAIN_URL}}/movies/webhooks/{{WEBHOOK}}",
+											"host": [
+												"{{DOMAIN_URL}}"
+											],
+											"path": [
+												"movies",
+												"webhooks",
+												"{{WEBHOOK}}"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Fail",
+							"item": [
+								{
+									"name": "Get a webhook without access token",
+									"event": [
+										{
+											"listen": "prerequest",
+											"script": {
+												"exec": [
+													"pm.sendRequest({\r",
+													"    url: pm.environment.get(\"DOMAIN_URL\") + '/movies/webhooks',\r",
+													"    method: 'POST',\r",
+													"    header: {\r",
+													"        \"Authorization\": `Bearer ${pm.environment.get(\"USER_ACCESS_TOKEN\")}`,\r",
+													"        \"Content-Type\": \"application/json\"\r",
+													"    },\r",
+													"    body: JSON.stringify({\r",
+													"        \"url\": \"https://www.coolplaces.com\",\r",
+													"        \"token\": \"my_secret_token\"\r",
+													"    })\r",
+													"}, function (error, result) {\r",
+													"    pm.environment.set(\"WEBHOOK\", result.json().webhook.id);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										},
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {\r",
+													"    pm.response.to.have.status(401);\r",
+													"});\r",
+													"\r",
+													"pm.sendRequest({\r",
+													"    url: pm.environment.get(\"DOMAIN_URL\") + '/movies/webhooks/' + pm.environment.get(\"WEBHOOK\"),\r",
+													"    method: 'DELETE',\r",
+													"    header: {\r",
+													"        \"Authorization\": `Bearer ${pm.environment.get(\"USER_ACCESS_TOKEN\")}`,\r",
+													"    }\r",
+													"}, function (error, result) {\r",
+													"    pm.environment.set(\"WEBHOOK\", \"\");\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"auth": {
+											"type": "noauth"
+										},
+										"method": "GET",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{DOMAIN_URL}}/movies/webhooks/{{WEBHOOK}}",
+											"host": [
+												"{{DOMAIN_URL}}"
+											],
+											"path": [
+												"movies",
+												"webhooks",
+												"{{WEBHOOK}}"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Get a webhook with wrong access token",
+									"event": [
+										{
+											"listen": "prerequest",
+											"script": {
+												"exec": [
+													"pm.sendRequest({\r",
+													"    url: pm.environment.get(\"DOMAIN_URL\") + '/movies/webhooks',\r",
+													"    method: 'POST',\r",
+													"    header: {\r",
+													"        \"Authorization\": `Bearer ${pm.environment.get(\"ADMIN_ACCESS_TOKEN\")}`,\r",
+													"        \"Content-Type\": \"application/json\"\r",
+													"    },\r",
+													"    body: JSON.stringify({\r",
+													"        \"url\": \"https://www.coolplaces.com\",\r",
+													"        \"token\": \"my_secret_token\"\r",
+													"    })\r",
+													"}, function (error, result) {\r",
+													"    pm.environment.set(\"WEBHOOK\", result.json().webhook.id);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										},
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {\r",
+													"    pm.response.to.have.status(403);\r",
+													"});\r",
+													"\r",
+													"\r",
+													"pm.sendRequest({\r",
+													"    url: pm.environment.get(\"DOMAIN_URL\") + '/movies/webhooks/' + pm.environment.get(\"WEBHOOK\"),\r",
+													"    method: 'DELETE',\r",
+													"    header: {\r",
+													"        \"Authorization\": `Bearer ${pm.environment.get(\"ADMIN_ACCESS_TOKEN\")}`,\r",
+													"    }\r",
+													"}, function (error, result) {\r",
+													"    pm.environment.set(\"WEBHOOK\", \"\");\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "GET",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{DOMAIN_URL}}/movies/webhooks/{{WEBHOOK}}",
+											"host": [
+												"{{DOMAIN_URL}}"
+											],
+											"path": [
+												"movies",
+												"webhooks",
+												"{{WEBHOOK}}"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "POST /movies/webhooks",
+					"item": [
+						{
+							"name": "Success",
+							"item": [
+								{
+									"name": "Create a webhook with access token",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Webhook is successfully created\", function () {\r",
+													"    pm.response.to.have.status(201);\r",
+													"    pm.sendRequest({\r",
+													"        url: pm.environment.get(\"DOMAIN_URL\") + '/movies/webhooks/' + pm.response.json().webhook.id,\r",
+													"        method: 'DELETE',\r",
+													"        header: {\"Authorization\": `Bearer ${pm.environment.get(\"USER_ACCESS_TOKEN\")}`},\r",
+													"    });\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"url\": \"https://www.coolplaces.com\",\r\n    \"token\": \"my_secret_token\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{DOMAIN_URL}}/movies/webhooks",
+											"host": [
+												"{{DOMAIN_URL}}"
+											],
+											"path": [
+												"movies",
+												"webhooks"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Fail",
+							"item": [
+								{
+									"name": "Create a webhook without access token",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Try to create webhook without access token\", function () {\r",
+													"    pm.response.to.have.status(401);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"auth": {
+											"type": "noauth"
+										},
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"url\": \"https://www.coolplaces.com\",\r\n    \"token\": \"my_secret_token\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{DOMAIN_URL}}/movies/webhooks",
+											"host": [
+												"{{DOMAIN_URL}}"
+											],
+											"path": [
+												"movies",
+												"webhooks"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "DELETE /movies/webhooks/{webhook}",
+					"item": [
+						{
+							"name": "Success",
+							"item": [
+								{
+									"name": "Delete a webhook with correct access token",
+									"event": [
+										{
+											"listen": "prerequest",
+											"script": {
+												"exec": [
+													"pm.sendRequest({\r",
+													"    url: pm.environment.get(\"DOMAIN_URL\") + '/movies/webhooks',\r",
+													"    method: 'POST',\r",
+													"    header: {\r",
+													"        \"Authorization\": `Bearer ${pm.environment.get(\"USER_ACCESS_TOKEN\")}`,\r",
+													"        \"Content-Type\": \"application/json\"\r",
+													"    },\r",
+													"    body: JSON.stringify({\r",
+													"        \"url\": \"https://www.coolplaces.com\",\r",
+													"        \"token\": \"my_secret_token\"\r",
+													"    })\r",
+													"}, function (error, result) {\r",
+													"    pm.environment.set(\"WEBHOOK\", result.json().webhook.id);\r",
+													"});\r",
+													""
+												],
+												"type": "text/javascript"
+											}
+										},
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Delete a specific webhook successful\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{DOMAIN_URL}}/movies/webhooks/{{WEBHOOK}}",
+											"host": [
+												"{{DOMAIN_URL}}"
+											],
+											"path": [
+												"movies",
+												"webhooks",
+												"{{WEBHOOK}}"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Fail",
+							"item": [
+								{
+									"name": "Delete a movie without access token",
+									"event": [
+										{
+											"listen": "prerequest",
+											"script": {
+												"exec": [
+													"pm.sendRequest({\r",
+													"    url: pm.environment.get(\"DOMAIN_URL\") + '/movies/webhooks',\r",
+													"    method: 'POST',\r",
+													"    header: {\r",
+													"        \"Authorization\": `Bearer ${pm.environment.get(\"USER_ACCESS_TOKEN\")}`,\r",
+													"        \"Content-Type\": \"application/json\"\r",
+													"    },\r",
+													"    body: JSON.stringify({\r",
+													"        \"url\": \"https://www.coolplaces.com\",\r",
+													"        \"token\": \"my_secret_token\"\r",
+													"    })\r",
+													"}, function (error, result) {\r",
+													"    pm.environment.set(\"WEBHOOK\", result.json().webhook.id);\r",
+													"});\r",
+													"\r",
+													""
+												],
+												"type": "text/javascript"
+											}
+										},
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Try to delete without an access token\", function () {\r",
+													"    pm.response.to.have.status(401);\r",
+													"});\r",
+													"\r",
+													"pm.sendRequest({\r",
+													"    url: pm.environment.get(\"DOMAIN_URL\") + '/movies/webhooks/' + pm.environment.get(\"WEBHOOK\"),\r",
+													"    method: 'DELETE',\r",
+													"    header: {\r",
+													"        \"Authorization\": `Bearer ${pm.environment.get(\"USER_ACCESS_TOKEN\")}`,\r",
+													"    }\r",
+													"}, function (error, result) {\r",
+													"    pm.environment.set(\"WEBHOOK\", \"\");\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"auth": {
+											"type": "noauth"
+										},
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{DOMAIN_URL}}/movies/webhooks/{{WEBHOOK}}",
+											"host": [
+												"{{DOMAIN_URL}}"
+											],
+											"path": [
+												"movies",
+												"webhooks",
+												"{{WEBHOOK}}"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Delete a movie access token for another user",
+									"event": [
+										{
+											"listen": "prerequest",
+											"script": {
+												"exec": [
+													"pm.sendRequest({\r",
+													"    url: pm.environment.get(\"DOMAIN_URL\") + '/movies/webhooks',\r",
+													"    method: 'POST',\r",
+													"    header: {\r",
+													"        \"Authorization\": `Bearer ${pm.environment.get(\"USER_ACCESS_TOKEN\")}`,\r",
+													"        \"Content-Type\": \"application/json\"\r",
+													"    },\r",
+													"    body: JSON.stringify({\r",
+													"        \"url\": \"https://www.coolplaces.com\",\r",
+													"        \"token\": \"my_secret_token\"\r",
+													"    })\r",
+													"}, function (error, result) {\r",
+													"    pm.environment.set(\"WEBHOOK\", result.json().webhook.id);\r",
+													"});\r",
+													"\r",
+													""
+												],
+												"type": "text/javascript"
+											}
+										},
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Try to delete with an access token for another user\", function () {\r",
+													"    pm.response.to.have.status(403);\r",
+													"});\r",
+													"\r",
+													"pm.sendRequest({\r",
+													"    url: pm.environment.get(\"DOMAIN_URL\") + '/movies/webhooks/' + pm.environment.get(\"WEBHOOK\"),\r",
+													"    method: 'DELETE',\r",
+													"    header: {\r",
+													"        \"Authorization\": `Bearer ${pm.environment.get(\"USER_ACCESS_TOKEN\")}`,\r",
+													"    }\r",
+													"}, function (error, result) {\r",
+													"    pm.environment.set(\"WEBHOOK\", \"\");\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{ADMIN_ACCESS_TOKEN}}",
+													"type": "string"
+												},
+												{
+													"key": "password",
+													"value": "{{ACCESS_TOKEN}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{DOMAIN_URL}}/movies/webhooks/{{WEBHOOK}}",
+											"host": [
+												"{{DOMAIN_URL}}"
+											],
+											"path": [
+												"movies",
+												"webhooks",
+												"{{WEBHOOK}}"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						}
+					]
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{USER_ACCESS_TOKEN}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"pm.sendRequest({",
+					"    url: pm.environment.get(\"DOMAIN_URL\") + '/accounts/authenticate',",
+					"    method: 'POST',",
+					"    header: {\"Content-Type\": \"application/json\"},",
+					"    body: JSON.stringify({",
+					"        'username': 'user',",
+					"        'password': 'password'",
+					"    })",
+					"}, function (err, res) {",
+					"    pm.environment.set(\"USER_ACCESS_TOKEN\", res.json().accessToken);",
+					"    pm.environment.set(\"USER_REFRESH_TOKEN\", res.json().refreshToken);",
+					"});",
+					"",
+					"pm.sendRequest({",
+					"    url: pm.environment.get(\"DOMAIN_URL\") + '/accounts/authenticate',",
+					"    method: 'POST',",
+					"    header: {\"Content-Type\": \"application/json\"},",
+					"    body: JSON.stringify({",
+					"        'username': 'admin',",
+					"        'password': 'password'",
+					"    })",
+					"}, function (err, res) {",
+					"    pm.environment.set(\"ADMIN_ACCESS_TOKEN\", res.json().accessToken);",
+					"    pm.environment.set(\"ADMIN_REFRESH_TOKEN\", res.json().refreshToken);",
+					"});"
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}

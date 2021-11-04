@@ -1,0 +1,20 @@
+[
+	{
+			"id": "1",
+			"username": "admin",
+			"password": "password",
+			"permissonsLevel": "ADMIN"
+	},
+	{
+			"id": "2",
+			"username": "user",
+			"password": "password",
+			"permissonsLevel": "USER"
+	},
+	{
+			"id": "3",
+			"username": "pelle",
+			"password": "password",
+			"permissonsLevel": "USER"
+	}
+]
